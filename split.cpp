@@ -11,13 +11,41 @@ the function below should be the only one in this file.
 */
 
 #include "split.h"
+#include <iostream>
+using namespace std;
 
 /* Add a prototype for a helper function here if you need */
+void push_back(Node*& cur, Node* n);
 
 void split(Node*& in, Node*& odds, Node*& evens)
 {
   /* Add code here */
-// WRITE YOUR CODE HERE
+  // WRITE YOUR CODE HERE
+  if (in == nullptr)
+    return;
+  bool flag = in -> value % 2;
+  Node* temp = in -> next;
+  if (flag)
+    push_back(odds, in);
+  else
+    push_back(evens, in);
+  in = temp;
+  split(in, odds, evens);
 }
 
 /* If you needed a helper function, write it here */
+void push_back(Node*& cur, Node* n)
+{
+  if (cur == nullptr)
+  {
+    cur = n;
+    cur -> next = nullptr;
+  }
+  else if (cur -> next == nullptr)
+  {
+    cur -> next = n;
+    cur -> next -> next = nullptr;
+  }
+  else
+    push_back(cur -> next, n);
+}
