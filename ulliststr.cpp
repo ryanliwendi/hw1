@@ -49,7 +49,7 @@ void ULListStr::push_back(const std::string& val)
 void ULListStr::pop_back()
 {
   tail_ -> last --;
-  if (tail_ -> last == tail_ -> first)
+  if (tail_ -> last == tail_ -> first) // No elements in the current Item
   {
     Item *temp = tail_;
     tail_ = tail_ -> prev;
@@ -64,7 +64,10 @@ void ULListStr::pop_back()
 
 void ULListStr::push_front(const std::string& val)
 {
-  if (head_ == nullptr)
+  if (head_ == nullptr) /* In the case of adding the first element in the first Item,
+                        * for convenience we'll let last increment by one instead of
+                        * decrementing first, which requires creation of a new Item
+                        */
   {
     Item *item = new Item;
     head_ = item, tail_ = item;
@@ -118,11 +121,14 @@ std::string* ULListStr::getValAtLoc(size_t loc) const
     return nullptr;
   Item *temp = head_;
   int cur_loc = 0;
-  while (cur_loc + (temp -> last - temp -> first) <= loc)
+  while (cur_loc + (temp -> last - temp -> first) <= loc) // Find loc's corresponding Item
   {
     cur_loc += temp -> last - temp -> first;
     temp = temp -> next;
   }
+  /* temp -> val + temp -> first: the pointer to the first element of the corresponding Item
+   * loc - cur_loc: further amount of steps we need to take to reach loc
+   */
   return temp -> val + (temp -> first) + loc - cur_loc;
 }
 
