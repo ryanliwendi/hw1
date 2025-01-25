@@ -14,6 +14,7 @@ the function below should be the only one in this file.
 using namespace std;
 
 /* Add a prototype for a helper function here if you need */
+// Pushs node cur into the list with root node n
 void push_back(Node*& cur, Node* n);
 
 void split(Node*& in, Node*& odds, Node*& evens)
